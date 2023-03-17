@@ -4,24 +4,17 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.OperatorConstants;
 
-/** An example command that uses an example subsystem. */
 public class DriveArcadeCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveSubsystem m_subsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
+  private final DriveSubsystem m_driveSubsystem;
+
   public DriveArcadeCommand(DriveSubsystem subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
+    m_driveSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
@@ -32,8 +25,9 @@ public class DriveArcadeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.drivetrain.arcadeDrive(Constants.OperatorConstants.kDriveSpeed * RobotContainer.m_driverController.getLeftY(),
-     Constants.OperatorConstants.kDriveSpeed * RobotContainer.m_driverController.getRightX());
+    double xDrive = OperatorConstants.kDriveSpeed * RobotContainer.m_driverController.getLeftY();
+    double zDrive = OperatorConstants.kDriveSpeed * RobotContainer.m_driverController.getRightX();
+    m_driveSubsystem.arcadeDrive(xDrive, zDrive);
   }
 
   // Called once the command ends or is interrupted.
